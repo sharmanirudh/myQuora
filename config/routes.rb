@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root to: "home#index"
   post '/question' => 'home#question'
   post '/answer' => 'home#answer'
+  post '/up_vote' => 'home#up_vote'
+  post '/down_vote' => 'home#down_vote'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

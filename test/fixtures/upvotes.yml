@@ -3,7 +3,9 @@
 one:
   upvote_type: MyString
   upvotetype_id: 1
+  user_id: 
 
 two:
   upvote_type: MyString
   upvotetype_id: 1
+  user_id: 
