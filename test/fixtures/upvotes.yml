@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  upvote_type: MyString
+  upvotetype_id: 1
+
+two:
+  upvote_type: MyString
+  upvotetype_id: 1

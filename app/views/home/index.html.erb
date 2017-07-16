@@ -1,0 +1,33 @@
+<%= current_user.email %>
+
+<%= form_tag(controller: "home", action: "question", method: "post") do %>
+
+	<%= label_tag("Question") %><br>
+	<%= text_area_tag(:content) %><br>
+	<%= submit_tag("Submit") %>
+
+<% end %>
+
+Questions
+<div style="border: thick solid black;">
+	<% Question.all.each do |q| %>
+		<div style="border: medium solid black;">
+			email: <%= User.find(q.user_id).email %><br>
+			<%= q.content %>
+			<div style="border: thin solid black;">
+				Answers<br><br>
+				<% Answer.where(question_id: q.id).each do |a| %>
+					email: <%= User.find(a.user_id).email %><br>
+					<%= a.content %><br><br>
+				<% end %>
+				<%= form_tag(controller: "home", action: "answer", method: "post") do %>
+
+					<%= label_tag("Answer: ") %>
+					<%= text_area_tag(:content) %><br>
+					<%= hidden_field_tag("question_id", q.id) %>
+					<%= submit_tag("Submit") %>
+				<% end %>
+			</div>
+		</div>		
+	<% end %> 
+</div>
