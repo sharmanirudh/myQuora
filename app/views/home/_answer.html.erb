@@ -1,4 +1,4 @@
-<div class="answer">
+<div class="answer" id="answer_<%= answer.id %>">
 	email: <%= User.find(answer.user_id).email %>
 	<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"), id: "upvoteA_#{answer.id}", remote: true do %>
 		<%= hidden_field_tag("type", "A") %>
@@ -11,5 +11,12 @@
 		<%= submit_tag("Down Vote " + Downvote.where(downvotetype_id: answer.id, downvote_type: 'A').length.to_s) %>
 	<% end %>
 	<br>
-	<%= answer.content %><br><br>
+	<div  id="answer_<%= answer.id %>"><%= answer.content %></div>
+	<div style="display: inline-flex;">
+		<%= form_tag url_for(controller: "home", action: "edit", method: "post"), id: "editA_#{answer.id}", remote: true do %>
+			<%= hidden_field_tag("answer_id", answer.id) %>
+			<%= submit_tag("Edit Answer") %>
+		<% end %>
+	</div>
+	<br><br>
 </div>

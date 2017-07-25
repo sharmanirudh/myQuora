@@ -15,10 +15,10 @@
 	<br>
 	<%= question.content %>
 
-	<div class="answers" id="answer_<%= question.id %>">
+	<div class="answers" id="answers_<%= question.id %>">
 		ANSWERS<br><br>
 		<% Answer.where(question_id: question.id).each do |a| %>
-			<div class="answer">
+			<div class="answer" id="answer_<%= a.id %>">
 				email: <%= User.find(a.user_id).email %>
 				<div style="display: inline-flex;">
 					<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"), id: "upvoteA_#{a.id}", remote: true do %>
@@ -33,7 +33,14 @@
 					<% end %>
 				</div>
 				<br>
-				<%= a.content %><br><br>
+				<div id="answer_content_<%= a.id %>"><%= a.content %></div>
+				<div style="display: inline-flex;">
+					<%= form_tag url_for(controller: "home", action: "edit", method: "post"), id: "editA_#{a.id}", remote: true do %>
+						<%= hidden_field_tag("answer_id", a.id) %>
+						<%= submit_tag("Edit Answer") %>
+					<% end %>
+				</div>
+				<br><br>
 			</div>
 		<% end %>
 		<%= form_tag url_for(controller: "home", action: "answer", method: "post"), class: "giveAns", remote: true do %>
