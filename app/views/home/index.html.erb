@@ -1,49 +1,57 @@
 <%= current_user.email %>
 
-<%= form_tag(controller: "home", action: "question", method: "post") do %>
+<%= form_tag url_for(controller: "home", action: "question"), class: "askQuestion", remote: true do %>
 
 	<%= label_tag("Question") %><br>
 	<%= text_area_tag(:content) %><br>
 	<%= submit_tag("Submit") %>
 <% end %>
 
-Questions
-<div style="border: thick solid black;">
+
+
+QUESTIONS
+<div id="questions">
 	<% Question.all.each do |q| %>
 
-		<div style="border: medium solid black;">
+		<div class="question">
 			email: <%= q.user.email %>
-			<%= form_tag(controller: "home", action: "up_vote", method: "post") do %>
-				<%= hidden_field_tag("type", "Q") %>
-				<%= hidden_field_tag("upvotetype_id", q.id) %>
-				<%= submit_tag("Up Vote " + Upvote.where(upvotetype_id: q.id, upvote_type: 'Q').length.to_s) %>
-			<% end %>
-			<%= form_tag(controller: "home", action: "down_vote", method: "post") do %>
-				<%= hidden_field_tag("type", "Q") %>
-				<%= hidden_field_tag("downvotetype_id", q.id) %>
-				<%= submit_tag("Down Vote " + Downvote.where(downvotetype_id: q.id, downvote_type: 'Q').length.to_s) %>
-			<% end %>
+			<div style="display: inline-flex;">
+				<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"),id: "upvoteQ_#{q.id}", remote: true do %>
+					<%= hidden_field_tag("type", "Q") %>
+					<%= hidden_field_tag("upvotetype_id", q.id) %>
+					<%= submit_tag("Up Vote " + Upvote.where(upvotetype_id: q.id, upvote_type: 'Q').length.to_s) %>
+				<% end %>
+				<%= form_tag url_for(controller: "home", action: "down_vote", method: "post"), id: "downvoteQ_#{q.id}", remote: true do %>
+					<%= hidden_field_tag("type", "Q") %>
+					<%= hidden_field_tag("downvotetype_id", q.id) %>
+					<%= submit_tag("Down Vote " + Downvote.where(downvotetype_id: q.id, downvote_type: 'Q').length.to_s) %>
+				<% end %>
+			</div>
 			<br>
 			<%= q.content %>
 
-			<div style="border: thin solid black;">
-				Answers<br><br>
+			<div class="answers" id="answer_<%= q.id %>">
+				ANSWERS<br><br>
 				<% Answer.where(question_id: q.id).each do |a| %>
-					email: <%= User.find(a.user_id).email %>
-					<%= form_tag(controller: "home", action: "up_vote", method: "post") do %>
-						<%= hidden_field_tag("type", "A") %>
-						<%= hidden_field_tag("upvotetype_id", q.id) %>
-						<%= submit_tag("Up Vote " + Upvote.where(upvotetype_id: q.id, upvote_type: 'A').length.to_s) %>
-					<% end %>
-					<%= form_tag(controller: "home", action: "down_vote", method: "post") do %>
-						<%= hidden_field_tag("type", "A") %>
-						<%= hidden_field_tag("downvotetype_id", q.id) %>
-						<%= submit_tag("Up Vote " + Downvote.where(downvotetype_id: q.id, downvote_type: 'Q').length.to_s) %>
-					<% end %>
-					<br>
-					<%= a.content %><br><br>
+					<div class="answer">
+						email: <%= User.find(a.user_id).email %>
+						<div style="display: inline-flex;">
+							<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"), id: "upvoteA_#{a.id}", remote: true do %>
+								<%= hidden_field_tag("type", "A") %>
+								<%= hidden_field_tag("upvotetype_id", a.id) %>
+								<%= submit_tag("Up Vote " + Upvote.where(upvotetype_id: a.id, upvote_type: 'A').length.to_s) %>
+							<% end %>
+							<%= form_tag url_for(controller: "home", action: "down_vote", method: "post"), id: "downvoteA_#{a.id}", remote: true do %>
+								<%= hidden_field_tag("type", "A") %>
+								<%= hidden_field_tag("downvotetype_id", a.id) %>
+								<%= submit_tag("Down Vote " + Downvote.where(downvotetype_id: a.id, downvote_type: 'A').length.to_s) %>
+							<% end %>
+						</div>
+						<br>
+						<%= a.content %><br><br>
+					</div>
 				<% end %>
-				<%= form_tag(controller: "home", action: "answer", method: "post") do %>
+				<%= form_tag url_for(controller: "home", action: "answer", method: "post"), class: "giveAns", remote: true do %>
 
 					<%= label_tag("Answer: ") %>
 					<%= text_area_tag(:content) %><br>
@@ -52,7 +60,7 @@ Questions
 				<% end %>
 			</div>
 
-		</div>		
+		</div>
 
 	<% end %> 
 </div>

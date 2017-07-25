@@ -1,0 +1,48 @@
+<div class="question">
+	email: <%= question.user.email %>
+	<div style="display: inline-flex;">
+		<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"), id: "upvoteQ_#{question.id}", remote: true do %>
+			<%= hidden_field_tag("type", "Q") %>
+			<%= hidden_field_tag("upvotetype_id", question.id) %>
+			<%= submit_tag("Up Vote " + Upvote.where(upvotetype_id: question.id, upvote_type: 'Q').length.to_s) %>
+		<% end %>
+		<%= form_tag url_for(controller: "home", action: "down_vote", method: "post"), id: "downvoteQ_#{question.id}", remote: true do %>
+			<%= hidden_field_tag("type", "Q") %>
+			<%= hidden_field_tag("downvotetype_id", question.id) %>
+			<%= submit_tag("Down Vote " + Downvote.where(downvotetype_id: question.id, downvote_type: 'Q').length.to_s) %>
+		<% end %>
+	</div>
+	<br>
+	<%= question.content %>
+
+	<div class="answers" id="answer_<%= question.id %>">
+		ANSWERS<br><br>
+		<% Answer.where(question_id: question.id).each do |a| %>
+			<div class="answer">
+				email: <%= User.find(a.user_id).email %>
+				<div style="display: inline-flex;">
+					<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"), id: "upvoteA_#{a.id}", remote: true do %>
+						<%= hidden_field_tag("type", "A") %>
+						<%= hidden_field_tag("upvotetype_id", answer.id) %>
+						<%= submit_tag("Up Vote " + Upvote.where(upvotetype_id: answer.id, upvote_type: 'A').length.to_s) %>
+					<% end %>
+					<%= form_tag url_for(controller: "home", action: "down_vote", method: "post"), id: "downvoteA_#{a.id}", remote: true do %>
+						<%= hidden_field_tag("type", "A") %>
+						<%= hidden_field_tag("downvotetype_id", answer.id) %>
+						<%= submit_tag("Downvote Vote " + Downvote.where(downvotetype_id: answer.id, downvote_type: 'A').length.to_s) %>
+					<% end %>
+				</div>
+				<br>
+				<%= a.content %><br><br>
+			</div>
+		<% end %>
+		<%= form_tag url_for(controller: "home", action: "answer", method: "post"), class: "giveAns", remote: true do %>
+
+			<%= label_tag("Answer: ") %>
+			<%= text_area_tag(:content) %><br>
+			<%= hidden_field_tag("question_id", question.id) %>
+			<%= submit_tag("Submit") %>
+		<% end %>
+	</div>
+
+</div>

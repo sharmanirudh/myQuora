@@ -1,0 +1,9 @@
+#questions {
+	border: thick solid black;
+}
+.question {
+	border: medium solid black;
+}
+.answers {
+	border: thin solid black;
+}

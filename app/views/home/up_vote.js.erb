@@ -1,0 +1,2 @@
+var upvoteButton = $("#upvote<%= @type %>_<%= @type_id %>").children().last()[0];
+upvoteButton.value = upvoteButton.value.slice(0,8).concat(<%= Upvote.where(upvotetype_id: @type_id, upvote_type: @type).length.to_s %>);

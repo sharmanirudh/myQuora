@@ -1,0 +1,2 @@
+var downvoteButton = $("#downvote<%= @type %>_<%= @type_id %>").children().last()[0];
+downvoteButton.value = downvoteButton.value.slice(0,10).concat(<%= Downvote.where(downvotetype_id: @type_id, downvote_type: @type).length.to_s %>);
