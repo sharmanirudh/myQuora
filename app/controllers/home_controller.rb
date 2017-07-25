@@ -139,7 +139,7 @@ class HomeController < ApplicationController
 		@answer.content = content
 		if @answer.save
 			respond_to do |format|
-				format.js {    }
+				format.js {    } 
 			end
 		else
 

@@ -1,1 +1,1 @@
-$('#answer_<%= @answer.id %>')[0].innerHTML = ("<%= escape_javascript (render 'home/update_answer', answer: @answer) %>");
+$('#answer_<%= @answer.id %>')[0].innerHTML = ("<%= escape_javascript (render 'home/answer', answer: @answer) %>");
