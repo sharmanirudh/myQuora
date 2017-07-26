@@ -13,7 +13,9 @@
 		<% end %>
 	</div>
 	<br>
-	<%= question.content %>
+	<div class="fr-view">
+		<%= simple_format(question.content) %>
+	</div>
 	<%= form_tag url_for(controller: "home", action: "delete", method: "post"), id: "deleteQ_#{question.id}", remote: true do %>
 		<%= hidden_field_tag("type", "Q") %>
 		<%= hidden_field_tag("deletetype_id", question.id) %>

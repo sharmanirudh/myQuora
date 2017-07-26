@@ -13,7 +13,11 @@
 		<% end %>
 	</div>
 	<br>
-	<div id="answer_content_<%= answer.id %>"><%= answer.content %></div>
+	<div id="answer_content_<%= answer.id %>">
+		<div class="fr-view">
+			<%= simple_format(answer.content) %>
+		</div>	
+	</div>
 	<div style="display: inline-flex;">
 		<%= form_tag url_for(controller: "home", action: "edit", method: "post"), id: "editA_#{answer.id}", remote: true do %>
 			<%= hidden_field_tag("answer_id", answer.id) %>
