@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post '/down_vote' => 'home#down_vote'
   post '/edit' => 'home#edit'
   post '/update_answer' => 'home#update_answer'
+  post '/delete' => 'home#delete'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,5 +1,5 @@
-<div class="question">
-	email: <%= question.user.email %>
+<div class="question" id="question_<%= question.id %>">
+	Name: <%= question.user.name %>
 	<div style="display: inline-flex;">
 		<%= form_tag url_for(controller: "home", action: "up_vote", method: "post"), id: "upvoteQ_#{question.id}", remote: true do %>
 			<%= hidden_field_tag("type", "Q") %>
@@ -14,6 +14,11 @@
 	</div>
 	<br>
 	<%= question.content %>
+	<%= form_tag url_for(controller: "home", action: "delete", method: "post"), id: "deleteQ_#{question.id}", remote: true do %>
+		<%= hidden_field_tag("type", "Q") %>
+		<%= hidden_field_tag("deletetype_id", question.id) %>
+		<%= submit_tag("Delete") %>
+	<% end %>
 
 	<div class="answers" id="answers_<%= question.id %>">
 		ANSWERS<br><br>

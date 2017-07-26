@@ -83,22 +83,6 @@ class HomeController < ApplicationController
 	end
 
 	def edit
-		puts " "
-		puts " "
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
 		answer_id = params["answer_id"]
 		@answer = Answer.where(id: answer_id).first
 		if @answer
@@ -111,29 +95,7 @@ class HomeController < ApplicationController
 	end
 
 	def update_answer
-		puts " "
-		puts " "
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts "#################################"
-		puts " "
-		puts " "
-		puts "#{params}"
-		answer_id = params["answer_id"]
+		sanswer_id = params["answer_id"]
 		content = params["content"]
 		@answer = Answer.where(id: answer_id).first
 		@answer.content = content
@@ -147,5 +109,23 @@ class HomeController < ApplicationController
 	end
 
 	def delete
+		@type_id = params["deletetype_id"]
+		@type = params["type"]
+		if(@type == 'A')
+			answer = Answer.where(id: @type_id, user_id: current_user).first
+			if answer.destroy
+				upvotes = Upvote.where(upvotetype_id: answer.id, upvote_type: 'A')
+				downvotes = Downvote.where(downvotetype_id: answer.id, downvote_type: 'A')
+				upvotes.each do |upvote|
+					upvote.destroy
+				end
+				downvotes.each do |downvote|
+					downvote.destroy
+				end
+				respond_to do |format|
+					format.js {    }
+				end
+			end
+		end
 	end
 end
