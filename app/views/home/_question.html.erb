@@ -17,7 +17,7 @@
 	<%= form_tag url_for(controller: "home", action: "delete", method: "post"), id: "deleteQ_#{question.id}", remote: true do %>
 		<%= hidden_field_tag("type", "Q") %>
 		<%= hidden_field_tag("deletetype_id", question.id) %>
-		<%= submit_tag("Delete") %>
+		<%= submit_tag("Delete Question") %>
 	<% end %>
 
 	<div class="answers" id="answers_<%= question.id %>">

@@ -22,7 +22,7 @@
 		<%= form_tag url_for(controller: "home", action: "delete", method: "post"), id: "deleteA_#{answer.id}", remote: true do %>
 			<%= hidden_field_tag("type", "A") %>
 			<%= hidden_field_tag("deletetype_id", answer.id) %>
-			<%= submit_tag("Delete") %>
+			<%= submit_tag("Delete Answer") %>
 		<% end %>
 	</div>
 	<br><br>
