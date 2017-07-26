@@ -98,7 +98,9 @@ class HomeController < ApplicationController
 		answer_id = params["answer_id"]
 		content = params["content"]
 		@answer = Answer.where(id: answer_id).first
-		@answer.content = content
+		if( !(content == ""))
+			@answer.content = content
+		end
 		if @answer.save
 			respond_to do |format|
 				format.js {    } 
