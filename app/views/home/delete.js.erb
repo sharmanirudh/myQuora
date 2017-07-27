@@ -1,1 +1,10 @@
-$('#answer_<%= @type_id %>')[0].remove();
+<% if @type == 'A' %>
+	$('#answer_<%= @type_id %>')[0].remove();
+<% else %>
+	$('#question_<%= @type_id %>')[0].remove();
+	<% if @answers %>
+		<% @answers.each do |answer| %>
+			$('#answer_<%= answer.id %>')[0].remove();
+		<% end %>
+	<% end %>
+<% end %>

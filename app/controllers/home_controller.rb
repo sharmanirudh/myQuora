@@ -98,7 +98,7 @@ class HomeController < ApplicationController
 		answer_id = params["answer_id"]
 		content = params["content"]
 		@answer = Answer.where(id: answer_id).first
-		if( !(content == ""))
+		if !(content == "")
 			@answer.content = content
 		end
 		if @answer.save
@@ -113,7 +113,9 @@ class HomeController < ApplicationController
 	def delete
 		@type_id = params["deletetype_id"]
 		@type = params["type"]
-		if(@type == 'A')
+		@typeHumanize = ""
+		if @type == 'A'
+			@typeHumanize = "answer"
 			answer = Answer.where(id: @type_id, user_id: current_user).first
 			if answer.destroy
 				upvotes = Upvote.where(upvotetype_id: answer.id, upvote_type: 'A')
@@ -126,6 +128,35 @@ class HomeController < ApplicationController
 				end
 				respond_to do |format|
 					format.js {    }
+				end
+			end
+		end
+		if @type == 'Q'
+			@typeHumanize = "question"
+			question = Question.where(id: @type_id, user_id: current_user).first
+			if question.destroy
+				@answers = Answer.where(question_id: @type_id, user_id: current_user)
+				ques_upvotes = Upvote.where(upvotetype_id: @type_id, upvote_type: 'Q')
+				ques_downvotes = Downvote.where(downvotetype_id: @type_id, downvote_type: 'Q')
+				respond_to do |format|
+					format.js {    }
+				end
+				ques_upvotes.each do |upvote|
+					upvote.destroy
+				end
+				ques_downvotes.each do |downvote|
+					downvote.destroy
+				end
+				@answers.each do |answer|
+					ans_upvotes = Upvote.where(upvotetype_id: answer.id, upvote_type: 'A')
+					ans_downvotes = Downvote.where(downvotetype_id: answer.id, downvote_type: 'A')
+					ans_upvotes.each do |upvote|
+						upvote.destroy
+					end
+					ans_downvotes.each do |downvote|
+						downvote.destroy
+					end
+					answer.destroy
 				end
 			end
 		end
